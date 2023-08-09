@@ -20,7 +20,8 @@
 		const todo: Todo = {
 			id: Math.floor(Math.random() * 1_000),
 			title,
-			content
+			content,
+			checked: false
 		};
 		$todos = [...$todos, todo];
 	};
