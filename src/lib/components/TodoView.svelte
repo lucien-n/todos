@@ -24,7 +24,6 @@
 			<button
 				class=" text-blue-500 underline"
 				on:click={() => {
-					dispatch('edit', todo);
 					editing = false;
 				}}>Save</button
 			>

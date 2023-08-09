@@ -3,12 +3,14 @@
 	import { todos } from '$lib/stores';
 	import type { Todo } from '$lib/types';
 
-	let title: string;
-	let content: string;
+	let title: string = '';
+	let content: string = '';
 
 	const createTodo = () => {
+		if (!title) return;
+
 		const todo: Todo = {
-			id: $todos.length + 1,
+			id: Math.floor(Math.random() * 1_000),
 			title,
 			content
 		};
@@ -17,12 +19,6 @@
 
 	const deleteTodo = ({ detail: { id } }: { detail: { id: number } }) => {
 		$todos = $todos.filter((todo) => todo.id !== id);
-	};
-
-	const editTodo = ({ detail: todo }: { detail: Todo }) => {
-		$todos = $todos.filter((todo) => todo.id !== todo.id);
-
-		$todos = [...$todos, todo];
 	};
 </script>
 
@@ -61,7 +57,7 @@
 	<hr class="mx-auto lg:w-1/2" />
 	<section class="mx-auto flex flex-col gap-3 lg:w-1/2">
 		{#each $todos.reverse() as todo}
-			<TodoView {todo} on:delete={deleteTodo} on:edit={editTodo} />
+			<TodoView {todo} on:delete={deleteTodo} />
 		{/each}
 	</section>
 </section>
