@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Todo } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
+	import { fly } from 'svelte/transition';
 
 	export let todo: Todo;
 
@@ -9,7 +10,12 @@
 	const dispatch = createEventDispatcher();
 </script>
 
-<article id="todo-{todo.id}" class="flex w-full gap-2 rounded border border-black px-3 py-2">
+<article
+	in:fly={{ x: -200, duration: 150 }}
+	out:fly={{ x: 200, duration: 150 }}
+	id="todo-{todo.id}"
+	class="flex w-full gap-2 rounded border border-black px-3 py-2"
+>
 	<div class="flex w-full flex-col gap-2">
 		{#if editing}
 			<input type="text" class="border-b border-black text-xl font-bold" bind:value={todo.title} />
