@@ -14,6 +14,10 @@
 		};
 		$todos = [...$todos, todo];
 	};
+
+	const deleteTodo = ({ detail: { id } }: { detail: { id: number } }) => {
+		$todos = $todos.filter((todo) => todo.id !== id);
+	};
 </script>
 
 <section class="flex w-full flex-col gap-y-5">
@@ -51,7 +55,7 @@
 	<hr class="mx-auto lg:w-1/2" />
 	<section class="mx-auto flex flex-col gap-3 lg:w-1/2">
 		{#each $todos.reverse() as todo}
-			<TodoView {todo} />
+			<TodoView {todo} on:delete={deleteTodo} />
 		{/each}
 	</section>
 </section>
