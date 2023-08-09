@@ -9,6 +9,10 @@
 
 	const dispatch = createEventDispatcher();
 
+	const toggleEditing = (): void => {
+		editing = !editing;
+	};
+
 	const toggleChecked = (): void => {
 		todo.checked = !todo.checked;
 	};
@@ -45,7 +49,7 @@
 					}}>Save</button
 				>
 			{:else}
-				<button class=" text-blue-500 underline" on:click={() => (editing = true)}>Edit</button>
+				<button class=" text-blue-500 underline" on:click={toggleEditing}>Edit</button>
 			{/if}
 			<button class=" text-red-500 underline" on:click={() => dispatch('delete', { id: todo.id })}
 				>Delete</button
