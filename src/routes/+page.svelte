@@ -2,9 +2,17 @@
 	import TodoView from '$lib/components/TodoView.svelte';
 	import { todos } from '$lib/stores';
 	import type { Todo } from '$lib/types';
+	import { onMount } from 'svelte';
 
 	let title: string = '';
 	let content: string = '';
+
+	onMount(() => {
+		$todos = JSON.parse(localStorage.todos) || [];
+		todos.subscribe((values) => {
+			localStorage.setItem('todos', JSON.stringify(values));
+		});
+	});
 
 	const createTodo = () => {
 		if (!title) return;
