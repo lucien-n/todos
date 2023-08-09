@@ -15,6 +15,7 @@
 
 	const toggleChecked = (): void => {
 		todo.checked = !todo.checked;
+		editing = false;
 	};
 </script>
 
