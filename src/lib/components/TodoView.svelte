@@ -13,7 +13,7 @@
 	<div class="flex w-full flex-col gap-2">
 		{#if editing}
 			<input type="text" class="border-b border-black text-xl font-bold" bind:value={todo.title} />
-			<input type="text" class="border-b border-black" bind:value={todo.content} />
+			<textarea rows="2" class="border-b border-black" bind:value={todo.content} />
 		{:else}
 			<h1 class="border-b border-white text-xl font-bold">{todo.title}</h1>
 			<p class="border-b border-white">{todo.content}</p>
