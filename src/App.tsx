@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Todo } from "./lib/types";
 import TodoCreate from "./components/TodoCreate";
 import TodoView from "./components/TodoView";
 
 const App = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
+
+  useEffect(() => {
+    const todos = JSON.parse(localStorage.todos) || [];
+    setTodos(todos);
+  }, []);
+
+  useEffect(() => {
+    if (todos.length > 0) localStorage.todos = JSON.stringify(todos);
+  }, [todos]);
 
   const createTodo = (todo: Todo): void => {
     setTodos([...todos, todo]);
