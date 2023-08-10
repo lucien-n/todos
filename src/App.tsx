@@ -17,13 +17,22 @@ const App = () => {
     ]);
   };
 
+  const deleteTodo = (todo_id: number): void => {
+    setTodos([...todos.filter((todo: Todo) => todo.id !== todo_id)]);
+  };
+
   return (
     <section className="flex w-full flex-col gap-y-5">
       <TodoCreate onCreate={createTodo}></TodoCreate>
       <hr className="mx-auto lg:w-1/2" />
       <section className="mx-auto flex flex-col gap-3 lg:w-1/2">
         {todos.map((todo: Todo) => (
-          <TodoView key={todo.id} todo={todo} onEdit={editTodo}></TodoView>
+          <TodoView
+            key={todo.id}
+            todo={todo}
+            onEdit={editTodo}
+            onDelete={deleteTodo}
+          ></TodoView>
         ))}
       </section>
     </section>

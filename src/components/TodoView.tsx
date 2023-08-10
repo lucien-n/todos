@@ -4,9 +4,11 @@ import { Todo } from "../lib/types";
 const TodoView = ({
   todo,
   onEdit,
+  onDelete,
 }: {
   todo: Todo;
   onEdit: (todo: Todo) => void;
+  onDelete: (id: number) => void;
 }) => {
   const [editing, setEditing] = useState<boolean>(false);
 
@@ -17,7 +19,7 @@ const TodoView = ({
     setEditing(!editing);
   };
 
-  const editTodo = () => {
+  const editTodo = (): void => {
     if (!title) return;
 
     todo.title = title;
@@ -25,6 +27,10 @@ const TodoView = ({
 
     onEdit(todo);
     toggleEditing();
+  };
+
+  const deleteTodo = (): void => {
+    onDelete(todo.id);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -81,6 +87,9 @@ const TodoView = ({
             Edit
           </button>
         )}
+        <button className=" text-red-500 underline" onClick={deleteTodo}>
+          Delete
+        </button>
       </div>
     </article>
   );
