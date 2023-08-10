@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Todo } from "../lib/types";
 
 const TodoView = ({
@@ -11,12 +11,25 @@ const TodoView = ({
   onDelete: (id: number) => void;
 }) => {
   const [editing, setEditing] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false);
 
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
+  useEffect(() => {
+    setChecked(todo.checked);
+  }, [todo, setChecked]);
+
+  useEffect(() => {
+    todo.checked = checked;
+  }, [todo, checked]);
+
   const toggleEditing = (): void => {
     setEditing(!editing);
+  };
+
+  const toggleChecked = (): void => {
+    setChecked(!checked);
   };
 
   const editTodo = (): void => {
@@ -70,26 +83,52 @@ const TodoView = ({
           </>
         ) : (
           <>
-            <h1 className="border-b border-white text-xl font-bold">
+            <h1
+              className={
+                "border-b border-white text-xl font-bold " +
+                (checked ? "checked" : "")
+              }
+            >
               {todo.title}
             </h1>
-            <p className="border-b border-white">{todo.content}</p>
+            <p
+              className={"border-b border-white " + (checked ? "checked" : "")}
+            >
+              {todo.content}
+            </p>
           </>
         )}
       </div>
       <div className="flex flex-col justify-center">
-        {editing ? (
-          <button className=" text-blue-500 underline" onClick={editTodo}>
-            Save
+        {checked ? (
+          <button className="text-gray underline" onClick={toggleChecked}>
+            Uncheck
           </button>
         ) : (
-          <button className=" text-blue-500 underline" onClick={toggleEditing}>
-            Edit
-          </button>
+          <>
+            {editing ? (
+              <button className=" text-blue-500 underline" onClick={editTodo}>
+                Save
+              </button>
+            ) : (
+              <button
+                className=" text-blue-500 underline"
+                onClick={toggleEditing}
+              >
+                Edit
+              </button>
+            )}
+            <button className=" text-red-500 underline" onClick={deleteTodo}>
+              Delete
+            </button>
+            <button
+              className=" text-green-500 underline"
+              onClick={toggleChecked}
+            >
+              Check
+            </button>
+          </>
         )}
-        <button className=" text-red-500 underline" onClick={deleteTodo}>
-          Delete
-        </button>
       </div>
     </article>
   );

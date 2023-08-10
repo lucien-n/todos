@@ -14,6 +14,7 @@ const TodoCreate = ({ onCreate }: { onCreate: (todo: Todo) => void }) => {
       id: Math.floor(Math.random() * 1_000),
       title,
       content,
+      checked: false,
     };
 
     onCreate(todo);

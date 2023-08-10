@@ -8,3 +8,9 @@ body {
   height: 100%;
   margin: 0;
 }
+
+@layer components {
+  .checked {
+    @apply italic text-zinc-700 line-through;
+  }
+}
