@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Todo } from "../lib/types";
+import TodoActions from "./TodoActions";
+import TodoContent from "./TodoContent";
 
 const TodoView = ({
   todo,
@@ -46,18 +48,12 @@ const TodoView = ({
     onDelete(todo.id);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = e.target.value;
-    if (!value) return;
-    setTitle(value);
+  const onTitle = (new_title: string) => {
+    if (new_title) setTitle(new_title);
   };
 
-  const handleTextAreaChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ): void => {
-    const value = e.target.value;
-    if (!value) return;
-    setContent(value);
+  const onContent = (new_content: string) => {
+    if (new_content) setContent(new_content);
   };
 
   return (
@@ -66,69 +62,23 @@ const TodoView = ({
       className="flex w-full gap-3 rounded border border-black px-3 py-2"
     >
       <div className="flex w-full flex-col gap-2">
-        {editing ? (
-          <>
-            <input
-              type="text"
-              className="border-b border-black text-xl font-bold"
-              defaultValue={todo.title}
-              onChange={handleInputChange}
-            />
-            <textarea
-              rows={2}
-              className="border-b border-black"
-              defaultValue={todo.content}
-              onChange={handleTextAreaChange}
-            />
-          </>
-        ) : (
-          <>
-            <h1
-              className={
-                "border-b border-white text-xl font-bold " +
-                (checked ? "checked" : "")
-              }
-            >
-              {todo.title}
-            </h1>
-            <p
-              className={"border-b border-white " + (checked ? "checked" : "")}
-            >
-              {todo.content}
-            </p>
-          </>
-        )}
+        <TodoContent
+          checked={checked}
+          editing={editing}
+          todo={todo}
+          onTitle={onTitle}
+          onContent={onContent}
+        ></TodoContent>
       </div>
       <div className="flex flex-col justify-center">
-        {checked ? (
-          <button className="text-gray underline" onClick={toggleChecked}>
-            Uncheck
-          </button>
-        ) : (
-          <>
-            {editing ? (
-              <button className=" text-blue-500 underline" onClick={editTodo}>
-                Save
-              </button>
-            ) : (
-              <button
-                className=" text-blue-500 underline"
-                onClick={toggleEditing}
-              >
-                Edit
-              </button>
-            )}
-            <button className=" text-red-500 underline" onClick={deleteTodo}>
-              Delete
-            </button>
-            <button
-              className=" text-green-500 underline"
-              onClick={toggleChecked}
-            >
-              Check
-            </button>
-          </>
-        )}
+        <TodoActions
+          checked={checked}
+          editing={editing}
+          onDelete={deleteTodo}
+          onEdit={editTodo}
+          toggleChecked={toggleChecked}
+          toggleEditing={toggleEditing}
+        ></TodoActions>
       </div>
     </article>
   );
